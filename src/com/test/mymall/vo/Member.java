@@ -15,18 +15,21 @@ public class Member {
 		return id;
 	}
 	public void setId(String id) {
+		System.out.println("setId() Member.java");
 		this.id = id;
 	}
 	public String getPw() {
 		return pw;
 	}
 	public void setPw(String pw) {
+		System.out.println("setPw() Member.java");
 		this.pw = pw;
 	}
 	public int getLevel() {
 		return level;
 	}
 	public void setLevel(int level) {
+		System.out.println("setLevel() Member.java");
 		this.level = level;
 	}
 }

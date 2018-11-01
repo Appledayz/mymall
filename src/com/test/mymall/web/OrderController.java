@@ -7,10 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/indexController")
-public class indexController extends HttpServlet {
+import com.test.mymall.vo.Member;
+
+@WebServlet("/OrderController")
+public class OrderController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("indexController.doGet()");
-		request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+		System.out.println("LoginController.doGet()");
+		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+		Member member = (Member) request.getSession().getAttribute("loginMember");
+		int memberNo = member.getNo();
+		//MemberItemDao.insertMemberItem(MemberItem);
 	}
 }
