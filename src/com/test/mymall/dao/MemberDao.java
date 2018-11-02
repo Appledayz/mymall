@@ -15,7 +15,6 @@ public class MemberDao {
 	Statement stmt;
 	public Member login(Connection conn, Member member) throws Exception {
 		System.out.println("MemberDao.login()");
-		conn = DBHelper.getConnection();
 		String sql = "SELECT * FROM member WHERE id="+member.getId()+" AND pw="+member.getPw();
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(sql);

@@ -9,8 +9,8 @@
 <body>
 	<h1>index</h1>
 	<a href="${pageContext.request.contextPath}/AddMemberController">회원가입</a>
-	<a href="${pageContext.request.contextPath}/ItemList">상품목록</a>
-	<a href="${pageContext.request.contextPath}/OrderList">주문목록</a>
+	<a href="${pageContext.request.contextPath}/ItemListController">상품목록</a>
+	<a href="${pageContext.request.contextPath}/OrderListController">주문목록</a>
 	<c:if test="${loginMember == null}">
 		<form action="${pageContext.request.contextPath}/LoginController" method="post">
 			<table>

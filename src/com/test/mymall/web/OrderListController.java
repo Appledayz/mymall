@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/OrderList")
-public class OrderList extends HttpServlet {
+@WebServlet("/OrderListController")
+public class OrderListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("OrderList.doGet()");
 		//MemberItemDao.getMemberItemList(memberNo);
