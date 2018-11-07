@@ -3,6 +3,7 @@ package com.test.mymall.web;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +19,12 @@ public class ItemListController extends HttpServlet {
 	private ItemService itemService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ItemListController.doGet()");
-		ArrayList<Item> list;
+		List<Item> list;
 		HashMap<String, Integer> pagingInfo;
-		int page = 0;
+		int page = 1;
 		itemService = new ItemService();
 		
+		//	page 요청이 있으면 받는다(초기값:1)
 		if(request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}

@@ -3,6 +3,9 @@ package com.test.mymall.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.ItemDao;
@@ -10,10 +13,10 @@ import com.test.mymall.vo.Item;
 
 public class ItemService {
 	private ItemDao itemDao;
-	private Connection conn;
+	private SqlSession sqlSession;
 	
-	public ArrayList<Item> itemList(HashMap<String, Integer> pagingInfo, int page){
-		ArrayList<Item> list = new ArrayList<Item>();
+	public List<Item> itemList(HashMap<String, Integer> pagingInfo, int page){
+		List<Item> list = new ArrayList<Item>();
 		itemDao = new ItemDao();
 		int rowPerPage = 15;
 		int currentPage=1;
@@ -25,9 +28,9 @@ public class ItemService {
 			currentPage=page;
 		}
 		try {
-			conn = DBHelper.getConnection();
-			list = itemDao.itemList(conn, rowPerPage, currentPage);
-			totalItemRow = itemDao.getTotalItemRow(conn);
+			sqlSession = DBHelper.getSqlSession();
+			list = itemDao.selectItemList(sqlSession, rowPerPage, currentPage);
+			totalItemRow = itemDao.getTotalItemRow(sqlSession);
 			lastPage = totalItemRow/rowPerPage;
 			if(totalItemRow%rowPerPage != 0) {
 				lastPage++;
@@ -50,7 +53,7 @@ public class ItemService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 		return list;
 	}
@@ -59,12 +62,12 @@ public class ItemService {
 	public void insertItem(Item item) {
 		itemDao = new ItemDao();
 		try {
-			conn = DBHelper.getConnection();
-			itemDao.insertItem(conn, item);
+			sqlSession = DBHelper.getSqlSession();
+			itemDao.insertItem(sqlSession, item);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 		
 	}

@@ -2,23 +2,26 @@ package com.test.mymall.service;
 
 import java.sql.Connection;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
 import com.test.mymall.vo.Member;
 
 public class LoginService {
 	MemberDao memberDao;
-	Connection conn;
+	private SqlSession sqlSession;
+	
 	public Member Login(Member member) {
 		System.out.println("LoginService.Login()");
 		memberDao = new MemberDao();
 		try {
-			conn = DBHelper.getConnection();
-			member = memberDao.login(conn, member);
+			sqlSession = DBHelper.getSqlSession();
+			member = memberDao.login(sqlSession, member);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(null, null, conn);
+			sqlSession.close();
 		}
 		return member;
 	}

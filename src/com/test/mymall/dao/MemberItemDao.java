@@ -6,38 +6,26 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.test.mymall.commons.DBHelper;
 
 public class MemberItemDao {
-	ResultSet rs;
-	Connection conn;
-	Statement stmt;
 	//Member INNER JOIN item
-	public ArrayList<HashMap<String, Object>> getMemberItemList(Connection conn, int memberNo) throws Exception{
+	public List<Object> getMemberItemList(SqlSession sqlSession, int memberNo) throws Exception{
 		System.out.println("MemberItemDao.getMemberItemList()");
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		conn = DBHelper.getConnection();
-		rs = null;
+		sqlSession = DBHelper.getSqlSession();
 		String sql = "select mi.no, mi.order_date, mi.item_no, i.name, i.price" + 
 				"		from member_item mi inner join item i" + 
 				"		on mi.item_no = i.no" + 
 				"		where mi.member_no="+memberNo;
-		stmt = conn.createStatement();
-		rs = stmt.executeQuery(sql);
-		while(rs.next()) {
-			//	MemberItemJoinItem -> HashMap
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("memberItemNo", rs.getInt("mi.no"));
-			map.put("itemPrice", rs.getInt("i.price"));
-			map.put("itemName", rs.getInt("i.name"));
-			map.put("orderDate", rs.getInt("mi.order_date"));
-			list.add(map);
-		}
-		DBHelper.close(rs, stmt, conn);
-		return list;
+		//	MemberItemJoinItem -> HashMap
+		return sqlSession.selectList("com.test.mymall.dao.MemberItemMapper.getMemberItemList", memberNo);
 	}
-	public void deleteMemberItem(Connection conn, int no) {
+	public void deleteMemberItem(SqlSession sqlSession, int no) {
 		System.out.println("MemberItemDao.deleteMemberItem()");
 		
 	}

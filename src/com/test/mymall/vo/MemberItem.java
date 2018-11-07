@@ -2,31 +2,32 @@ package com.test.mymall.vo;
 
 public class MemberItem {
 	private int no;
-	private int member_no;
-	private int item_no;
-	private String order_date;
+	private int memberNo;
+	private int itemNo;
+	private String orderDate;
+	
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public int getMember_no() {
-		return member_no;
+	public int getMemberNo() {
+		return memberNo;
 	}
-	public void setMember_no(int member_no) {
-		this.member_no = member_no;
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
-	public int getItem_no() {
-		return item_no;
+	public int getItemNo() {
+		return itemNo;
 	}
-	public void setItem_no(int item_no) {
-		this.item_no = item_no;
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
 	}
-	public String getOrder_date() {
-		return order_date;
+	public String getOrderDate() {
+		return orderDate;
 	}
-	public void setOrder_date(String order_date) {
-		this.order_date = order_date;
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
 	}
 }

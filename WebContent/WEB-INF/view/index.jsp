@@ -29,6 +29,7 @@
 	<c:if test="${loginMember != null}">
 		<br />
 		${loginMember.id} 님 로그인 중...
+		<a href="${pageContext.request.contextPath}/LogoutController"><button type="button">로그아웃</button></a>
 	</c:if>
 </body>
 </html>

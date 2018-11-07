@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mymall.dao.MemberMapper">
+  <select id="getMemberItemList" parameterType="String" resultType="com.test.mymall.vo.MemberItem">
+    SELECT
+   	  no,
+   	  name,
+   	  price
+    FROM member_item
+  </select>
+  <select id="selectMemberItemOne" resultType="int">
+    SELECT
+      no,
+      member_id memberId,
+      item_no itemNo,
+      order_date orderDate
+    FROM member_item
+    WHERE no = #{no}
+  </select>
+  <insert id="insertMemberItem" parameterType="com.test.mymall.vo.MemberItem">
+  	INSERT INTO member_item(no, member_no, item_no, order_date)
+  	VALUES (#(no), #(member_no), #{item_no}, null)
+  </insert>
+</mapper>

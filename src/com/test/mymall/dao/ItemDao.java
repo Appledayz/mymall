@@ -1,54 +1,35 @@
 package com.test.mymall.dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import com.test.mymall.commons.DBHelper;
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.vo.Item;
 
 public class ItemDao {
-	Connection conn;
-	Statement stmt;
-	ResultSet rs;
 	Item item;
-	public void insertItem(Connection conn, Item item) throws Exception {
+	public int insertItem(SqlSession sqlSession, Item item) throws Exception {
 		System.out.println("ItemDao.insertItem()");
 		String sql = "INSERT INTO item VALUES(null,"+item.getName()+","+item.getPrice()+")";
-		stmt = conn.createStatement();
-		stmt.executeUpdate(sql);
-		DBHelper.close(null, stmt, null);
-	}
-	public ArrayList<Item> itemList(Connection conn, int rowPerPage, int currentPage) throws Exception{
-		System.out.println("ItemDao.itemList()");
-		ArrayList<Item> list = new ArrayList<Item>();
-		int startRow = (currentPage-1)*rowPerPage;
-		String sql = "SELECT * FROM item limit "+startRow+","+rowPerPage;
-		stmt = conn.createStatement();
-		rs = stmt.executeQuery(sql);
-		while(rs.next()) {
-			item = new Item();
-			item.setNo(rs.getInt("no"));
-			item.setName(rs.getString("name"));
-			item.setPrice(rs.getInt("price"));
-			list.add(item);
-		}
-		DBHelper.close(rs, stmt, null);
-		return list;
+		return sqlSession.insert("com.test.mymall.dao.ItemMapper.inserItem", item);
 	}
 	
-	public int getTotalItemRow(Connection conn) throws SQLException {
+	public List<Item> selectItemList(SqlSession sqlSession, int rowPerPage, int currentPage) throws Exception{
+		System.out.println("ItemDao.selectItemList()");
+		int startRow = (currentPage-1)*rowPerPage;
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startRow", startRow);
+		map.put("rowPerPage", rowPerPage);
+//		sqlSession.selectList(id명,매개변수)
+		return sqlSession.selectList("com.test.mymall.dao.ItemMapper.selectItemList", map);
+	}
+	
+	public int getTotalItemRow(SqlSession sqlSession) throws SQLException {
 		System.out.println("ItemDao.getTotalItemRow()");
 		int result = 0;
 		String sql = "SELECT COUNT(*) FROM item";
-		stmt = conn.createStatement();
-		rs = stmt.executeQuery(sql);
-		if(rs.next()) {
-			result = rs.getInt(1);
-		}
-		DBHelper.close(rs, stmt, null);
 		return result;
 	}
 }
